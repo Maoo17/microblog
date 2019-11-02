@@ -2,6 +2,7 @@ from app import create_app, db
 from app.models import User, Post
 # from app.config import DevConfig
 
+#test
 # app = create_app(DevConfig)
 app = create_app()
 
