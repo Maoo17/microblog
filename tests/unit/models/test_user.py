@@ -52,6 +52,11 @@ def test_avatar(_mock_current_app, user1):
 
 
 def test_follow(test_app):
+    """
+    Test follow user
+    """
+    #pylint: disable=unused-argument
+
     u1 = User(username='john', email='john@example.com')
     u2 = User(username='susan', email='susan@example.com')
     db.session.add(u1)
@@ -62,7 +67,7 @@ def test_follow(test_app):
     u1.follow(u2)
     db.session.commit()
 
-    assert u1.is_following(u2) == True
+    assert u1.is_following(u2) is True
     assert u1.followed.count() == 1
     assert u1.followed.first().username == "susan"
     assert u2.followers.count() == 1
@@ -70,12 +75,17 @@ def test_follow(test_app):
 
     u1.unfollow(u2)
     db.session.commit()
-    assert u1.is_following(u2) == False
+    assert u1.is_following(u2) is False
     assert u1.followed.count() == 0
     assert u1.followers.count() == 0
 
 
 def test_follow_posts(test_app):
+    """
+    Test follow posts
+    """
+    #pylint: disable=unused-argument
+
     # create four users
     u1 = User(username='john', email='john@example.com')
     u2 = User(username='susan', email='susan@example.com')
@@ -111,3 +121,4 @@ def test_follow_posts(test_app):
     assert f1 == [p2, p4, p1]
     assert f2 == [p2, p3]
     assert f3 == [p3, p4]
+    assert f4 == [p4]
