@@ -1,0 +1,32 @@
+.custom-navbar {
+    background-color: #1A2933;
+    border-radius: 0;
+    border: none;
+    color: rgb(236, 236, 236);
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: rgb(236, 236, 236);
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: rgb(147, 146, 189);
+}
+
+.navbar-default .navbar-brand {
+    color: rgb(236, 236, 236);
+    font-weight: 300;
+}
+
+.logo {
+    float: left;
+    margin-top: 0.6em;
+    margin-right: 1em;
+    width: 30px;
+}
+
+@media (max-width: 768px) {
+    .logo {
+        margin-left: 15px;
+    }
+}
