@@ -22,7 +22,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            make exec-tests
+            make test
       # Step 4: create production and push to DockerHub
       - run:
           name: run production
