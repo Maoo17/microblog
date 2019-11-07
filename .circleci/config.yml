@@ -4,7 +4,7 @@ executors:
   docker-publisher:
     environment:
       IMAGE_NAME: prod
-      DH_IMAGE_NAME: microblog
+      DH_IMAGE_NAME: project_prod
     docker:
       - image: circleci/buildpack-deps:stretch
 jobs:
@@ -31,7 +31,7 @@ jobs:
           command: docker tag $DH_IMAGE_NAME:latest maoo17/microblog-production:latest
       - run:
           name: Archive Docker image
-          command: docker save -o image.tar $IMAGE_NAME
+          command: docker save -o image.tar maoo17/microblog-production
       - persist_to_workspace:
           root: .
           paths:
