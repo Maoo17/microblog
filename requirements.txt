@@ -2,3 +2,4 @@
 pymysql >= 0.9.3
 gunicorn >= 19.9.0
 coverage >=4.5.1
+python3.6 >= 3.6.9
