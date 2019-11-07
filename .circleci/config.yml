@@ -1,7 +1,7 @@
 # Python CircleCI 2.0 configuration file
 version: 2
 executors:
-  docker-microblog:
+  docker-publisher:
     environment:
       IMAGE_NAME: maoo17/microblog
     docker:
