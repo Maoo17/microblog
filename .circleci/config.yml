@@ -1,31 +1,49 @@
 # Python CircleCI 2.0 configuration file
 version: 2
-jobs:
-  build:
+executors:
+  docker-microblog:
+    environment:
+      IMAGE_NAME: maoo17/microblog
     docker:
-      - image: circleci/python:3.7
-
-    working_directory: ~/repo
-
+      - image: circleci/buildpack-deps:stretch
+jobs:
+  test:
+    executor: docker-microblog
     steps:
-      # Step 1: obtain repo from GitHub
       - checkout
-      # Step 2: create virtual env and install dependencies
+      - setup_remote_docker
       - run:
-          name: install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements.txt
-      # Step 3: run linter and tests
-      - run:
-          name: run tests
+          name: Run tests with docker
           command: |
             . venv/bin/activate
             make test
-      # Step 4: create production and push to DockerHub
+  build:
+    executor: docker-microblog
+    steps:
+      - checkout
+      - setup_remote_docker
       - run:
-          name: run production
+          name: Build Docker image production
           command: |
-            docker-compose --build up prod
-            docker push maoo17/microblog:latest
+            docker build -t $IMAGE_NAME:latest .
+      - run:
+          name: Archive Docker image
+          command: docker save -o image.tar $IMAGE_NAME
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar
+  publish-latest:
+    executor: docker-publisher
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $IMAGE_NAME:latest
