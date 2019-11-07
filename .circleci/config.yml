@@ -3,7 +3,7 @@ version: 2.1
 executors:
   docker-publisher:
     environment:
-      IMAGE_NAME: microblog-production
+      IMAGE_NAME: prod
     docker:
       - image: circleci/buildpack-deps:stretch
 jobs:
