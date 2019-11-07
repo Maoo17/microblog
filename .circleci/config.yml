@@ -10,13 +10,13 @@ executors:
 jobs:
   test:
     executor: docker-publisher
-    working_directory: ~/repo
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Run tests with docker
           command: |
+            python3 -m venv venv
             . venv/bin/activate
             make test
   build:
