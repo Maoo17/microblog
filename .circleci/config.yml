@@ -25,7 +25,7 @@ jobs:
             make exec-tests
       # Step 4: create production and push to DockerHub
       - run:
-        name: run production
-        command: |
-          build: docker-compose --build up prod
-          prod: docker push maoo17/microblog:latest
+          name: run production
+          command: |
+            docker-compose --build up prod
+            docker push maoo17/microblog:latest
