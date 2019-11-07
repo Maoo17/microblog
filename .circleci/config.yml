@@ -27,5 +27,5 @@ jobs:
       - run:
         name: run production
         command: |
-          docker-compose --build up prod
-          docker push maoo17/microblog:latest
+          build: docker-compose --build up prod
+          prod: docker push maoo17/microblog:latest
