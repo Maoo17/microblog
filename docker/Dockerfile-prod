@@ -1,0 +1,29 @@
+FROM python:3.6-alpine
+
+RUN adduser -D microblog
+
+WORKDIR /home/microblog
+
+COPY requirements.txt requirements.txt
+COPY requirements requirements
+
+RUN python -m venv venv
+RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-dev py-pip build-base \
+    && venv/bin/pip install --upgrade pip \
+    && venv/bin/pip install -r requirements.txt \
+    && apk del build-dependencies
+RUN venv/bin/pip install gunicorn
+RUN venv/bin/pip install gunicorn pymysql
+
+COPY app app
+COPY migrations migrations
+COPY microblog.py config.py boot.sh ./
+RUN chmod +x boot.sh
+
+ENV FLASK_APP microblog.py
+
+RUN chown -R microblog:microblog ./
+USER microblog
+
+EXPOSE 5000
+ENTRYPOINT ["./boot.sh"]

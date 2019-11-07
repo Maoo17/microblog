@@ -1,0 +1,20 @@
+FROM python:3.6-alpine
+
+RUN adduser -D microblog
+
+WORKDIR /home/microblog
+
+COPY requirements.txt requirements.txt
+COPY requirements requirements
+
+RUN python -m venv venv
+RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev make python-dev py-pip build-base \
+    && venv/bin/pip install --upgrade pip \
+    && venv/bin/pip install -r requirements/test.txt 
+RUN venv/bin/pip install gunicorn
+RUN venv/bin/pip install gunicorn pymysql
+
+COPY test.sh .
+RUN chmod +x test.sh
+
+ENTRYPOINT ["./test.sh"]
