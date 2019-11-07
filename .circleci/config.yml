@@ -10,6 +10,7 @@ executors:
 jobs:
   test:
     executor: docker-publisher
+    working_directory: ~/repo
     steps:
       - checkout
       - setup_remote_docker
@@ -59,6 +60,8 @@ workflows:
               branches:
                 only: master
           - build:
+              requires:
+                - test
               filters:
                 branches:
                   only: master
