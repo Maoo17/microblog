@@ -3,7 +3,7 @@ version: 2.1
 executors:
   docker-publisher:
     environment:
-      IMAGE_NAME: maoo17/microblog
+      IMAGE_NAME: microblog-production
     docker:
       - image: circleci/buildpack-deps:stretch
 jobs:
@@ -24,7 +24,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image production
-          command: |
+          command:
             docker build -t $IMAGE_NAME:latest .
       - run:
           name: Archive Docker image
