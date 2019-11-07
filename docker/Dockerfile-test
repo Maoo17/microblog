@@ -13,6 +13,7 @@ RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev make py
     && venv/bin/pip install -r requirements/test.txt 
 RUN venv/bin/pip install gunicorn
 RUN venv/bin/pip install gunicorn pymysql
+RUN venv/bin/pip install coverage
 
 COPY test.sh .
 RUN chmod +x test.sh
