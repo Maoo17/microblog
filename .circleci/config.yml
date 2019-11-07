@@ -25,12 +25,10 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image production
-          command:
-            docker-compose up --build -d $IMAGE_NAME
+          command: docker-compose up --build -d $IMAGE_NAME
       - run:
           name: Tag build with latest
-          command:
-            docker tag $DH_IMAGE_NAME:latest maoo17/microblog-production:latest
+          command: docker tag $DH_IMAGE_NAME:latest maoo17/microblog-production:latest
       - run:
           name: Archive Docker image
           command: docker save -o image.tar $IMAGE_NAME
