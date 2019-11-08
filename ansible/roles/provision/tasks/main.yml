@@ -40,7 +40,7 @@
         security_token: "{{ aws_session_token }}"
         region: "{{ region }}"
         filters:
-            instance-id: "{{item.instance_ids[0]}}" 
+            instance-id: "{{item.instance_ids[0]}}"
     with_items:
         "{{ec2.results}}"
     when: item.item.instance_tags.name == "loadBalancer"
@@ -64,10 +64,10 @@
         state: present
         zone: "{{ domain_name }}"
         record: "{{ item }}"
-        value: "{{lb_eip}}"
+        value: "{{lb_eip }}"
         type: A
         overwrite: yes
         wait: yes
     with_items:
-        -   "{{ domain_name}}"
-        -   "www.{{ domain_name}}"
+        -   "{{ domain_name }}"
+        -   "www.{{ domain_name }}"

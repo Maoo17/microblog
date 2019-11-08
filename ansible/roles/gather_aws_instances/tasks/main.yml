@@ -1,7 +1,7 @@
 ---
 -   name: Gather EC2 facts about running instances
     ec2_instance_facts:
-        region: us-east-1
+        region: "{{ region }}"
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
         security_token: "{{ aws_session_token }}"
@@ -19,6 +19,6 @@
 
 
 
-- name: Display Instance types
-  debug: 
-    msg: "{{ ec2_facts.instances }}"
+-   name: Display Instance types
+    debug: 
+        msg: "{{ ec2_facts.instances }}"
