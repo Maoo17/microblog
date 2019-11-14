@@ -57,7 +57,7 @@ jobs:
     steps:
       - run:
           name: Install ansible-playbook
-          command: apt-get install ansible-playbook
+          command: sudo apt-get install ansible-playbook
       - run:
           name: Run ansible-playbook application
           command:  ansible-playbook gather_aws_instances.yml application
