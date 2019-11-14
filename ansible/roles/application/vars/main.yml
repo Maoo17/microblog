@@ -1,0 +1,6 @@
+---
+docker_network: "microblog_network"
+database_name: "microblog-database"
+
+
+

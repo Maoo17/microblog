@@ -1,0 +1,35 @@
+---
+    - name: Install Docker's dependencies
+      apt:
+        name: "{{ docker__package_dependencies + docker__pip_dependencies }}"
+
+    - name: Add Docker's public GPG key to the APT keyring
+      apt_key:
+        id: "{{ docker__apt_key_id }}"
+        url: "{{ docker__apt_key_url }}"
+
+    - name: Configure Docker's upstream APT repository
+      apt_repository:
+        repo: "{{ docker__apt_repository }}"
+        update_cache: true
+    
+    - name: Install pip
+      apt:
+        name: python3-pip
+
+    - name: Install docker with pip
+      pip:
+        name: "docker"
+        executable: pip3
+    
+    - name: Install docker-compose
+      pip:
+        name: "docker-compose"
+        executable: pip3
+    
+    - name: Install Docker
+      apt:
+        name: "docker-ce"
+        state: "present"
+
+

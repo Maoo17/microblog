@@ -52,6 +52,12 @@ jobs:
           command: |
             echo "$DOCKER_HUB_PASS" | docker login -u "$DOCKER_HUB_USER" --password-stdin
             docker push maoo17/microblog-production:latest
+  application-setup:
+    executor: docker-publisher
+    steps:
+      - run:
+          name: Run ansible-playbook application
+          command:  ansible-playbook gather_aws_instances.yml application
 workflows:
       version: 2
       build-master:
@@ -69,6 +75,12 @@ workflows:
           - publish-latest:
               requires:
                 - build
+              filters:
+                branches:
+                  only: master
+          - application-setup:
+              requires:
+                - publish-latest
               filters:
                 branches:
                   only: master

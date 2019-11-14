@@ -1,0 +1,55 @@
+---
+    - name: ensure nginx is at the latest version
+      apt: name=nginx state=latest
+
+    - name: Install certbot
+      apt: name=python-certbot-apache state=latest
+
+# letsencrypt needs to be set everytime this script run
+    - name: Check if certificate already exists.
+      stat:
+        path: /etc/letsencrypt/live/{{ domain_name }}/cert.pem
+      register: letsencrypt_cert
+
+    - debug: msg="{{ letsencrypt_cert.stat.exists }}"
+
+    - name: Stop services to allow certbot to generate a cert.
+      command: service nginx stop
+      when: not letsencrypt_cert.stat.exists
+
+    - name: Generate new certificate if one doesn't exist.
+      shell: "certbot certonly --standalone --noninteractive --expand --agree-tos --email {{ admin_email }} -d {{ domain_name }} -d www.{{ domain_name }}"
+      when: not letsencrypt_cert.stat.exists
+    
+    - name: Template a file to /etc/nginx/nginx.conf
+      template:
+        src: ./templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: '0644'
+
+    - name: Template a file to /etc/nginx/sites-available/load-balancer.conf
+      template:
+        src: ./templates/load-balancer.conf.j2
+        dest: /etc/nginx/sites-available/load-balancer.conf
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: '0644'
+      
+    - name: Create a symbolic link to sites-enabled
+      file:
+        src: /etc/nginx/sites-available/load-balancer.conf
+        dest: /etc/nginx/sites-enabled/load-balancer.conf
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        state: link
+        force: "True"
+    
+    - name: Remove default file
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+    
+    - name: nginx restarted
+      command: service nginx start

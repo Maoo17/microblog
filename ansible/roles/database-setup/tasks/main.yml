@@ -1,0 +1,14 @@
+---
+    - name: Copy file with owner and permissions
+      copy:
+        src: ../docker-compose.yml
+        dest: /home/{{ server_user }}/docker-compose.yml
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: '0644'
+    
+    - name: Run docker-compose file for mysql docker container
+      docker_compose:
+        project_src: /home/{{ server_user }}/
+
+

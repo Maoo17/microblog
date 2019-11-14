@@ -1,0 +1,14 @@
+---
+    - name: "Launch docker container with microblog application"
+      docker_container:
+        name: "{{ docker_container_name }}"
+        image: "{{ docker_image }}"
+        # links:
+        #   - "db:{{ database_name }}"
+        ports:
+          - "{{ host_port }}:{{ container_port }}"
+        restart_policy: always
+        # network_mode: "{{ docker_network }}"
+        env:
+          SECRET_KEY: "{{ secret_key }}"
+          DATABASE_URL: "{{ database_url }}"
