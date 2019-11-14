@@ -56,8 +56,8 @@ jobs:
     executor: docker-publisher
     steps:
       - run:
-          name: Install ansible-playbook
-          command: sudo apt-get install ansible-playbook
+          name: Install ansible
+          command: sudo apt-get install ansible
       - run:
           name: Run ansible-playbook application
           command:  ansible-playbook gather_aws_instances.yml application
