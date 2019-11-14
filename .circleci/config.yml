@@ -60,7 +60,9 @@ jobs:
           command: sudo apt-get install ansible
       - run:
           name: Run ansible-playbook application
-          command:  ansible-playbook ansible/gather_aws_instances.yml ansible/application
+           command: |
+            . env/bin/activate
+            ansible-playbook ansible/gather_aws_instances.yml ansible/application
 workflows:
       version: 2
       build-master:
