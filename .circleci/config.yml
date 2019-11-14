@@ -54,7 +54,7 @@ jobs:
             docker push maoo17/microblog-production:latest
   application-setup:
     executor: docker-publisher
-    workDir: ~/microblog
+    working_directory: ~/microblog
     steps:
       - run:
           name: Run ansible-playbook application
