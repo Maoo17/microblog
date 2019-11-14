@@ -59,11 +59,7 @@ jobs:
       - checkout
       - run:
           name: Install for playbook run
-          command: |
-            sudo apt-get install ansible
-            sudo apt-get install python3-venv
-            python3 -m venv venv
-            . venv/bin/activate
+          command: sudo apt-get install ansible
       - run:
           name: Run ansible-playbook application
           command: ansible-playbook gather_aws_instances.yml application.yml
