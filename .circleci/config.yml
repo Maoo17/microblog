@@ -54,11 +54,12 @@ jobs:
             docker push maoo17/microblog-production:latest
   application-setup:
     executor: docker-publisher
+    working_directory: ~/project
     steps:
       - checkout
       - run:
           name: Step into ansible map
-          command: cd /project/ansible
+          command: cd /ansible
       - run:
           name: Run ansible-playbook application
           command: ansible-playbook gather_aws_instances.yml application.yml
