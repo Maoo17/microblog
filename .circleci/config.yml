@@ -54,13 +54,7 @@ jobs:
             docker push maoo17/microblog-production:latest
   application-setup:
     executor: docker-publisher
-    working_directory: ~/ci
     steps:
-      - run:
-          name: Retrieve Ansible lint rules file
-          command: |
-            cd /ci
-            git clone https://github.com/Maoo17/microblog
       - run:
           name: Run ansible-playbook application
           command: |
@@ -68,7 +62,8 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             sudo apt-get install ansible
-            ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml
+            ansible-playbook gather_aws_instances.yml application.yml
+          working_directory: ansible
 workflows:
       version: 2
       build-master:
