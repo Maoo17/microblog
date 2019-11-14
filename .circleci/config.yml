@@ -61,7 +61,7 @@ jobs:
       - run:
           name: Run ansible-playbook application
           command: |
-            . env/bin/activate
+            . venv/bin/activate
             ansible-playbook ansible/gather_aws_instances.yml ansible/application
 workflows:
       version: 2
