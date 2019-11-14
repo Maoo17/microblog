@@ -54,6 +54,7 @@ jobs:
             docker push maoo17/microblog-production:latest
   application-setup:
     executor: docker-publisher
+    workDir: ~/microblog
     steps:
       - run:
           name: Run ansible-playbook application
@@ -62,7 +63,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             sudo apt-get install ansible
-            ansible-playbook /home/ansible/gather_aws_instances.yml /home/ansible/application.yml
+            ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml
 workflows:
       version: 2
       build-master:
