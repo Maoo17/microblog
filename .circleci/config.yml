@@ -62,7 +62,7 @@ jobs:
           command: sudo apt-get install ansible
       - run:
           name: Recreate aws_keys.yml file temporary
-          command: bash ansible/create_aws_key.sh
+          command: bash ansible/create_aws_keys.sh
       - run:
           name: Run ansible-playbook application
           command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml --vault-password-file="/ansible/ci_vault_pass.sh"
