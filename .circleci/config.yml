@@ -54,7 +54,7 @@ jobs:
             docker push maoo17/microblog-production:latest
   application-setup:
     executor: docker-publisher
-    working_directory: ~/project/ansible
+    working_directory: ~/project
     steps:
       - checkout
       - run:
@@ -62,7 +62,7 @@ jobs:
           command: sudo apt-get install ansible
       - run:
           name: Run ansible-playbook application
-          command: ansible-playbook gather_aws_instances.yml application.yml
+          command: ansible/ansible-playbook ansible/gather_aws_instances.yml application.yml
 workflows:
       version: 2
       build-master:
