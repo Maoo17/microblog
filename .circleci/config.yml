@@ -65,7 +65,7 @@ jobs:
           command: bash ansible/create_aws_keys.sh
       - run:
           name: Run ansible-playbook application
-          command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml --vault-password-file="/ansible/ci_vault_pass.sh"
+          command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml --vault-password-file="ansible/ci_vault_pass.sh"
 workflows:
       version: 2
       build-master:
