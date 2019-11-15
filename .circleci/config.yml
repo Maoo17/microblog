@@ -65,7 +65,7 @@ jobs:
           command: echo $ANSIBLE_VAULT_PASS_CI > ansible/ci_vault_pass.txt
       - run:
           name: Run ansible-playbook application
-          command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml --vault-password-file="ansible/ci_vault_pass.txt" -vvvv
+          command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml --vault-password-file ansible/ci_vault_pass.txt
 workflows:
       version: 2
       build-master:
