@@ -61,8 +61,16 @@ jobs:
           name: Install for playbook run
           command: sudo apt-get install ansible
       - run:
+          name: Recreate aws_keys.yml file temporary
+          command: |
+            sudo touch ansible/aws_keys.yml
+            echo “aws_access_key: $AWS_ACCESS_KEY” > ansible/aws_keys.yml
+            echo “aws_secret_key: $AWS_SECRET_KEY” > ansible/aws_keys.yml
+            echo “aws_session_token: $AWS_SESSION_TOKEN” > ansible/aws_keys.yml
+            ansible-vault encrypt aws_keys --vault-password-file="/ansible/ci_vault_pass.sh"
+      - run:
           name: Run ansible-playbook application
-          command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml
+          command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml --vault-password-file="/ansible/ci_vault_pass.sh"
 workflows:
       version: 2
       build-master:
