@@ -65,7 +65,7 @@ jobs:
           command: echo $ANSIBLE_VAULT_PASS_CI > ansible/ci_vault_pass.txt
       - run:
           name: Decrypting
-          command: ansible-vault decrypt ansible/aws_keys.yml --vault-password-file ansible/ci_vault_pass.txt
+          command: ansible-vault decrypt ansible/aws_keys.yml --vault-password-file ansible/ci_vault_pass.txt -vvvvv
       - run:
           name: Run ansible-playbook application
           command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml
