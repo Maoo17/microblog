@@ -61,8 +61,11 @@ jobs:
           name: Install for playbook run
           command: sudo apt-get install ansible
       - run:
+          name: Set environment variable to file
+          command: echo $ANSIBLE_VAULT_PASS_CI > ansible/ci_vault_pass.txt
+      - run:
           name: Run ansible-playbook application
-          command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml --vault-password-file="ansible/ci_vault_pass.txt"
+          command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml --vault-password-file="ansible/ci_vault_pass.txt" -vvvv
 workflows:
       version: 2
       build-master:
