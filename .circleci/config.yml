@@ -59,7 +59,7 @@ jobs:
       - checkout
       - run:
           name: Install for playbook run
-          command: sudo apt-get install ansible
+          command: sudo pip install ansible
       - run:
           name: Set environment variable to file
           command: echo $ANSIBLE_VAULT_PASS_CI > ansible/ci_vault_pass.txt
