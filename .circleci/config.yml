@@ -63,9 +63,6 @@ jobs:
             sudo apt install python3-pip
             sudo pip3 install ansible
       - run:
-          name: Decrypting
-          command: ansible-vault decrypt ansible/aws_keys.yml --vault-password-file ansible/ci_vault_pass.sh -vvvvv
-      - run:
           name: Run ansible-playbook application
           command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml
 workflows:
