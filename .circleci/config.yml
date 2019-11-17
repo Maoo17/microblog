@@ -62,9 +62,9 @@ jobs:
           command: |
             sudo apt-get install python3-venv
             python3 -m venv venv
-      - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
+      - run: echo "source ~/project/venv/bin/activate" >> $BASH_ENV
       - run:
-          name: Install for playbook run
+          name: Install dependencies for playbook run
           command: pip3 install -r requirements/deploy.txt
       - run:
           name: Run ansible-playbook application
