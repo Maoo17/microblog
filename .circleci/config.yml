@@ -68,6 +68,7 @@ jobs:
           command: |
             sudo apt install python3-pip
             sudo pip3 install ansible
+            sudo pip3 install boto3
       - run:
           name: Run ansible-playbook application
           command: cd ansible && ansible-playbook gather_aws_instances.yml application.yml
