@@ -64,7 +64,7 @@ jobs:
             sudo pip3 install ansible
       - run:
           name: Run ansible-playbook application
-          command: ansible-playbook ansible/gather_aws_instances.yml ansible/application.yml
+          command: cd ansible && ansible-playbook gather_aws_instances.yml application.yml
 workflows:
       version: 2
       build-master:
