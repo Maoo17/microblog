@@ -58,6 +58,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install dependencies and enter venv
+          command: |
+            sudo apt-get install python3-venv
+            python3 -m venv venv
+            . venv/bin/activate
+      - run:
           name: Install for playbook run
           command: |
             sudo apt install python3-pip
