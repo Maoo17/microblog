@@ -65,10 +65,7 @@ jobs:
       - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
       - run:
           name: Install for playbook run
-          command: |
-            sudo apt install python3-pip
-            sudo pip3 install ansible
-            sudo pip3 install boto3
+          command: pip3 install -r requirements/deploy.txt
       - run:
           name: Run ansible-playbook application
           command: cd ansible && ansible-playbook gather_aws_instances.yml application.yml
