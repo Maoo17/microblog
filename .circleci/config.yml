@@ -62,7 +62,7 @@ jobs:
           command: |
             sudo apt-get install python3-venv
             python3 -m venv venv
-            . venv/bin/activate
+      - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV
       - run:
           name: Install for playbook run
           command: |
