@@ -6,6 +6,7 @@
         instance_tags:
           project: "{{  project_name  }}"
           name: appServer
+          Name: appServer
         instance_ids:
           - "app-server"
         security_group: app-server
@@ -14,6 +15,7 @@
         instance_tags:
           project: "{{  project_name  }}"
           name: loadBalancer
+          Name: loadBalancer
         instance_ids:
           - "load-balancer"
         security_group: load-balancer
@@ -22,7 +24,17 @@
         instance_tags:
           project: "{{  project_name  }}"
           name: "database"
+          Name: "database"
         instance_ids:
           - "database"
         security_group: database
+        count: 1
+      - instance_type: t2.micro
+        instance_tags:
+          project: "{{  project_name  }}"
+          name: "monitoring"
+          Name: "monitoring"
+        instance_ids:
+          - "database"
+        security_group: monitoring
         count: 1
