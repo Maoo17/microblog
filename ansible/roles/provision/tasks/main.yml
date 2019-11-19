@@ -1,9 +1,6 @@
 ---
 -   name: Launch the new EC2 Instance
     ec2:
-        aws_access_key: "{{ aws_access_key }}"
-        aws_secret_key: "{{ aws_secret_key }}"
-        security_token: "{{ aws_session_token }}"
         group: "{{ item.security_group }}"
         instance_type: "{{ item.instance_type }}"
         instance_tags: "{{ item.instance_tags }}"
@@ -11,6 +8,8 @@
         wait: yes
         region: "{{ region }}"
         keypair: "{{ keypair }}"
+        assign_public_ip: yes
+        vpc_subnet_id: "<subnet-id>"
         count: 1
         state: present
     loop: "{{ instances }}"
@@ -18,45 +17,16 @@
 
 
 
--   name: Allocate ellastic ip to load balancer
-    ec2_eip:
-        aws_access_key: "{{ aws_access_key }}"
-        aws_secret_key: "{{ aws_secret_key }}"
-        security_token: "{{ aws_session_token }}"
-        device_id: "{{item.instance_ids[0]}}" 
-        state: present
-        release_on_disassociation: yes
-        region: "{{ region }}"
-    with_items:
-        "{{ec2.results}}"
-    when: item.item.instance_tags.name == "loadBalancer"
-
-
-
--   name: Gather eip facts
-    ec2_eip_facts:
-        aws_access_key: "{{ aws_access_key }}"
-        aws_secret_key: "{{ aws_secret_key }}"
-        security_token: "{{ aws_session_token }}"
-        region: "{{ region }}"
-        filters:
-            instance-id: "{{item.instance_ids[0]}}"
-    with_items:
-        "{{ec2.results}}"
-    when: item.item.instance_tags.name == "loadBalancer"
-    register: eip
-
-
-
--   name: Set LB EIP fact
+-   name: Set LB IP fact
     set_fact:
-        lb_eip: "{{item.addresses[0].public_ip}}"
-    with_items: "{{eip.results}}"
-    when: item.addresses is defined
+        lb_ip: "{{item.instances[0].public_ip}}"
+    with_items:
+        "{{ec2.results}}"
+    when: item.item.instance_tags.name == "loadBalancer"
 
 
 
--   name: Set domain to LB ip in AWS (route53)
+-   name: Set domain to ip in AWS (route53)
     route53:
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
@@ -64,10 +34,10 @@
         state: present
         zone: "{{ domain_name }}"
         record: "{{ item }}"
-        value: "{{lb_eip }}"
+        value: "{{lb_ip}}"
         type: A
         overwrite: yes
         wait: yes
     with_items:
-        -   "{{ domain_name }}"
-        -   "www.{{ domain_name }}"
+        -   "{{ domain_name}}"
+        -   "www.{{ domain_name}}"

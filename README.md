@@ -30,6 +30,7 @@ source .venv/bin/activate
 make install-dev
 ```
 
+If you are on Windows and Cygwin you will probably have troubles installing the pip package `cryptography`. Common errors are missing `python.h`, `gcc`, `cffi` and `openssl`. 
 
 
 ### Database

@@ -10,5 +10,3 @@ In `local.yml` we put variables that we want to be available for all hosts in th
 In the file we assign the variable `ansible_python_interpreter` to be python3 in out virtual environemnt.
 
 You can add variables as you see fit to the files and also add more files for when you add more host groups. Name the file the same as your group and Ansible will find it automatically.
-
-PS! Use `ansible-vault` to encrypt your file before you push them to git if they contain passwords or other sensetive data.

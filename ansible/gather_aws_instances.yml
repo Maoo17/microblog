@@ -5,5 +5,3 @@
     gather_facts: False
     roles:
         -    gather_aws_instances
-    vars_files:
-        -   aws_keys.yml

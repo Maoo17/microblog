@@ -2,9 +2,6 @@
 -   name: Gather EC2 facts about running instances
     ec2_instance_facts:
         region: "{{ region }}"
-        aws_access_key: "{{ aws_access_key }}"
-        aws_secret_key: "{{ aws_secret_key }}"
-        security_token: "{{ aws_session_token }}"
     delegate_to: 127.0.0.1
     register: ec2_facts
 

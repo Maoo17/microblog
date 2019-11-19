@@ -20,7 +20,7 @@ chmod 400 /home/deploy/.ssh/authorized_keys
 # Edit ssh config
 sed -i 's/PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
 sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-echo "\nAllowUsers deploy" >> /etc/ssh/sshd_config
+echo "AllowUsers deploy" >> /etc/ssh/sshd_config
 service ssh restart
 
 # Set no need for sudo password, comment this out if you want more security. It might make some of the later scripts behave weird or stop working.

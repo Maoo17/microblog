@@ -34,7 +34,7 @@ Install `gcc` and modules in one command.
 
 ```
 RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-dev py-pip build-base \
-  && pip install --upgrade pip \
-  && pip install -r requirements.txt \
+  && venv/bin/pip install --upgrade pip \
+  && venv/bin/pip install -r requirements.txt \
   && apk del build-dependencies
 ```

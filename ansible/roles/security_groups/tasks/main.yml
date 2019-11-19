@@ -4,9 +4,6 @@
     name: "{{ group.name }}"
     description: The Webserver security group
     region: "{{ region }}"
-    aws_access_key: "{{ aws_access_key }}"
-    aws_secret_key: "{{ aws_secret_key }}"
-    security_token: "{{ aws_session_token }}"
     rules: "{{ group.port_rules }}"
     rules_egress: # outgoing traffic
       - proto: all

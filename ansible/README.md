@@ -1,7 +1,7 @@
 
 ### Documentation
 
-Anisble has surprisingly good [documentation](https://docs.ansible.com/ansible/latest/), use it find new modules and how to use a module.
+Ansible has surprisingly good [documentation](https://docs.ansible.com/ansible/latest/), use it find new modules and how to use a module.
 
 They also have a [best practice](https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html) that is good to read.
 
@@ -9,11 +9,13 @@ They also have a [best practice](https://docs.ansible.com/ansible/latest/user_gu
 
 ### How to run playbooks
 
+First open `provision.yml` and replace `<subnet-id>` with a subnet-id from AWS.
+
 Use the command `ansible-playbook` to run playbooks.
 
-To create servers use `ansible-playbook provision.yml`.
+To create servers use `ansible-playbook provision.yml`. PS open file and replace `<subnet-id>` with a subnet id from AWS.
 
-To destory servers use `ansible-playbook terminate_ec2.yml`.
+To destroy servers use `ansible-playbook terminate_ec2.yml`.
 
 
 
@@ -31,7 +33,7 @@ We have 4 playbooks provision, terminate, gather_aws_instances, site.
 - `database` only for the database server
 - `loadBalancer` only the load balancer server
 
-**terminate_ec2** destroys all servers we have on AWS withthe project name `devops` and destorys the elastic ip connected to the load balancer.
+**terminate_ec2** destroys all servers we have on AWS with the project name `devops` and destroys the elastic ip connected to the load balancer.
 
 **site** should run all other playbooks to setup the whole project from scratch to a running production.
 
@@ -47,16 +49,14 @@ We have 4 playbooks provision, terminate, gather_aws_instances, site.
 
 **hosts** contains host groups. We only have the host `local` because our servers are dynamic and we used the playbook `gather_aws_instances` instead.
 
-**insert_aws_keys_in_config.sh** reads AWS credentials from clipboard and pasts to `aws_keys.yml`. Also encrypts the file.
-
-**aws_keys.yml** vars file that contain AWS credentials. If you don't have this file it will be created when you run the `insert_aws_keys_in_config.sh` script.
+**insert_aws_keys_in_config.sh** reads AWS credentials from clipboard and exports as env variables. To use, source the file `. insert_aws_keys_in_config.sh`.
 
 
 
 ### Credentials
 
 #### ssh-keys
-Without ssh-key files we need to enter the password for out ssh-key everytime we run a task. To avoid this make sure you have added your ssh-key to the ssh-agent.
+Without ssh-key files we need to enter the password for out ssh-key every time we run a task. To avoid this make sure you have added your ssh-key to the ssh-agent. Do follwing commands or run `make add-ssh` in root folder (you need to replace <path-to-ssh-key> in `Makefile` to use this command).
 
 ```
 eval "$(ssh-agent -s)"
@@ -66,9 +66,11 @@ ssh-add ~/.ssh/aws
 #### AWS
 
 You need credentials from AWS to allow Ansible to manage servers. 
-Use the `insert_aws_keys_in_config.sh` script to paste AWS credentials from clipboard into `aws_keys.yml`.
+Use the `. insert_aws_keys_in_config.sh` script to export aws credentials as env variables.
 
 #### Ansible vault
+
+AVOID using Ansible-vault as we haven't found a way to use it on CircleCI! However if you want to use it, here you can read how.
 
 We can use ansible-vault to encrypt files that contain sensitive information. Things we want to push to GitHub but not want them visible.
 
@@ -94,16 +96,12 @@ Example of relevant settings:
 ```
 [defaults]
 host_key_checking           = False
-private_key_file            = ~/.ssh/aws
 ansible_python_interpreter  = python3
 inventory                   = hosts
 
 [inventory]
 enable_plugins              = ini
 ```
-
-Change `private_key_file = ~/.ssh/aws` to your ssh-key.
-
 
 Needed the following for Ansible to read the `hosts` file (which parser it should use to read the file).
 
