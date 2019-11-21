@@ -37,7 +37,6 @@
             from_port: 3306
             to_port: 3306
             cidr_ip: 0.0.0.0/0
-<<<<<<< HEAD
         - name: monitoring
           description: SG for the monitoring node
           port_rules:
@@ -57,5 +56,3 @@
             from_port: 3000
             to_port: 3000
             cidr_ip: 0.0.0.0/0
-=======
->>>>>>> upstream/master
