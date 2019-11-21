@@ -1,6 +1,5 @@
 .env
 app.db
-aws_keys.yml
 logs/
 
 # Byte-compiled / optimized / DLL files
