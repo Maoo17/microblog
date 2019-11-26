@@ -7,7 +7,6 @@
         #   - "db:{{ database_name }}"
         ports:
           - "{{ host_port }}:{{ container_port }}"
-          - "9125:9125"
         restart_policy: always
         # network_mode: "{{ docker_network }}"
         env:
