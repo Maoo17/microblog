@@ -1,0 +1,23 @@
+{
+    "experiemental": true,
+    "debug": true,
+    "log-level": "info",
+    "insecure-registries": [
+        "127.0.0.1"
+    ],
+    "hosts": [
+        "unix://var/run/docker.sock",
+        "tcp://0.0.0.0:2375"
+    ],
+    "tls": false,
+    "tlscacert": "",
+    "tlscert": "",
+    "tlskey": "",
+    "icc": false,
+    "userns-remap": "default",
+    "log-driver": "syslog",
+    "disable-legacy-registry": true,
+    "live-restore": true,
+    "userland-proxy": false,
+    "no-new-privileges": true
+}
