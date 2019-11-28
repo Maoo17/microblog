@@ -1,0 +1,18 @@
+[Unit]
+Description=MySQL Exporter
+User=prometheus
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/local/bin/mysqld_exporter \
+--config.my-cnf /etc/.exporter.cnf \
+--collect.auto_increment.columns \
+--collect.binlog_size \
+--collect.engine_innodb_status \
+--collect.engine_tokudb_status \
+--collect.global_status \
+--web.listen-address=0.0.0.0:9104
+
+[Install]
+WantedBy=multi-user.target

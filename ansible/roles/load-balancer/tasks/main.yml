@@ -53,3 +53,9 @@
     
     - name: nginx restarted
       command: service nginx start
+    
+    - name: Start docker container with nginx
+      command:
+        docker run -p 9113:9113 nginx/nginx-prometheus-exporter:0.4.2 -nginx.scrape-uri=https://{{ domain_name }}/metrics -nginx.retries=10 -nginx.ssl-verify=false -web.telemetry-path=/prometheus
+      
+    

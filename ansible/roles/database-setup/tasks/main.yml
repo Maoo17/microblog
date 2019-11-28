@@ -10,5 +10,52 @@
     - name: Run docker-compose file for mysql docker container
       docker_compose:
         project_src: /home/{{ server_user }}/
+    
+    - name:
+      command: sudo useradd -rs /bin/false prometheus
 
+    - name: create project directory downloads
+        file: state=directory path=/etc/mysqld_exporter  
 
+    - name: Download mysql exporter
+      get_url:
+        url: https://github.com/prometheus/mysqld_exporter/releases/download/v0.11.0/mysqld_exporter-0.11.0.linux-amd64.tar.gz
+        dest: .
+        mode: '0440'
+
+    - name: Extract downloaded mysql exporter file
+      unarchive:
+        src: xvzf mysqld_exporter-0.11.0.linux-amd64.tar.gz
+        dest: /etc/mysqld_exporter
+    
+    - name: Move files
+      command: sudo mv /etc/mysqld_exporter /usr/local/bin/
+
+    - name: Copy over files for db
+      copy:
+        src: ./files/db_setup.sql
+        dest: ~/db_setup.sql
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: '0644'
+
+    - name: Executing scripts db scripts on db docker container
+      shell: sudo docker exec -it microblog-database mysql -uroot -proot < ~/db_setup.sql
+
+    - name: "Run docker container"
+    - command: sudo docker pull prom/mysqld-exporter
+
+    - name: "Run docker container"
+    - command:
+        sudo docker run -d \
+            -p 9104:9104 \
+            --network host \
+            -e DATA_SOURCE_NAME="exporter:<password>@(localhost:3306)/" \
+            --restart always\
+            prom/mysqld-exporter:latest \
+            --collect.auto_increment.columns \
+            --collect.binlog_size \
+            --collect.engine_innodb_status \
+            --collect.engine_tokudb_status \
+            --collect.global_status
+      

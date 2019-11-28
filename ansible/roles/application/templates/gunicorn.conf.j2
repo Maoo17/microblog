@@ -1,0 +1,7 @@
+mappings:
+  - match: gunicorn.status.*
+    help: "http response code"
+    name: "http_response_code"
+    labels:
+      status: "$1"
+      job: "gunicorn"
