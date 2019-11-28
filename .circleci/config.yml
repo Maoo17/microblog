@@ -64,7 +64,7 @@ jobs:
           name: Load archived Docker image
           command: docker load -i /tmp/workspace/image.tar
       - snyk/scan:
-          docker-image-name: $IMAGE_NAME
+          docker-image-name: maoo17/microblog-production
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
