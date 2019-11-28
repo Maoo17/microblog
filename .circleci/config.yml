@@ -1,5 +1,7 @@
 # Python CircleCI 2.0 configuration file
 version: 2.1
+orbs: 
+    snyk: snyk/snyk@0.0.8
 executors:
   docker-publisher:
     environment:
@@ -8,6 +10,20 @@ executors:
     docker:
       - image: circleci/buildpack-deps:stretch
 jobs:
+  snyk:
+    docker:
+        - image: circleci/python:3.5
+    working_directory: ~/repo
+    steps:
+        - checkout
+        - run:
+            name: install dependencies
+            command: |
+                python3 -m venv venv
+                . venv/bin/activate
+                make install
+        - run: echo "source ~/repo/venv/bin/activate" >> $BASH_ENV # här gör vi så att så att CircleCi automatisk laddar venv och då kollar Snyk har installerat i den.
+        - snyk/scan
   test:
     executor: docker-publisher
     steps:
@@ -73,6 +89,10 @@ workflows:
       version: 2
       build-master:
         jobs:
+          - snyk:
+            filters:
+              branches:
+                only: master
           - test:
             filters:
               branches:
