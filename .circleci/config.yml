@@ -63,6 +63,8 @@ jobs:
       - run:
           name: Load archived Docker image
           command: docker load -i /tmp/workspace/image.tar
+      - snyk/scan:
+          docker-image-name: $IMAGE_NAME
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
@@ -100,6 +102,7 @@ workflows:
           - build:
               requires:
                 - test
+                - snyk
               filters:
                 branches:
                   only: master
