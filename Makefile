@@ -96,6 +96,17 @@ validate:
 	@pylint --rcfile=.pylintrc app tests
 
 
+# target: validate                     - Run bandit with config file
+.PHONY: bandit
+bandit:
+	@bandit -c .bandit.yml -r app
+
+
+# target: validate                     - Run bandit with config file
+.PHONY: bandit
+bandit:
+	@sudo docker run owasp/zap2docker-weekly zap-baseline.py -t https://maols.se
+
 
 # target: test-integration             - Run tests in tests/integration with coverage.py
 .PHONY: test-integration
