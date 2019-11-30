@@ -84,6 +84,14 @@
         remove: yes
      ignore_errors: yes
 
+-    name: Copy new sshd config to sshd config folder
+     copy:
+        src: files/sshd_config
+        dest: /etc/ssh/sshd_config
+
+-    name: Reload sshd
+     command: sudo service sshd restart
+
 
 
 
