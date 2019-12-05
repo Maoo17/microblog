@@ -103,8 +103,8 @@ bandit:
 
 
 # target: validate                     - Run bandit with config file
-.PHONY: bandit
-bandit:
+.PHONY: zap
+zap:
 	@sudo docker run owasp/zap2docker-weekly zap-baseline.py -t https://maols.se
 
 
