@@ -16,7 +16,10 @@ RUN venv/bin/pip install gunicorn pymysql
 
 COPY test.sh .
 COPY .pylintrc .
+COPY .bandit.yml .
+
 RUN chmod +x test.sh
 RUN chmod +x .pylintrc
+RUN chmod +x .bandit.yml
 
 ENTRYPOINT ["./test.sh"]
