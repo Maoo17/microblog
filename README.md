@@ -25,8 +25,8 @@ Here is how you setup the development environment and start the application.
 
 Create a virtual environment and install packages:
 ```
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 make install-dev
 ```
 
