@@ -52,5 +52,9 @@ services:
             "always"
         networks:
           microblog:
+    kubernetes:
+          build: 
+            dockerfile: docker/Dockerfile-kubernetes
+            context: .
 
 
